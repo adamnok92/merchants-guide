@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    /*
+     * https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin
+     */
+    id 'org.springframework.boot' version '3.0.2'
+}
+
+group 'org.adamnok'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
