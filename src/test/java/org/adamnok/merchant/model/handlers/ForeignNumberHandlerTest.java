@@ -5,7 +5,6 @@ import org.adamnok.merchant.model.state.ReadonlyState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,7 +24,7 @@ class ForeignNumberHandlerTest {
     void pattern() {
         when(state.getAllForeignNumbers()).thenReturn(Set.of("Alpha", "Beta"));
         final var result = handler.pattern(state);
-        final var expectedResult = "how much is (( |Alpha|Beta)+)\\?";
+        final var expectedResult = "how much is (( |Alpha|Beta)+) \\?";
         assertEquals(Optional.of(expectedResult), result);
     }
 
@@ -37,11 +36,21 @@ class ForeignNumberHandlerTest {
 
         final var result = handler.action(source, state);
         final var expectedResult = new OutAction(
-            MessageFormat.format("{0} is {1}",
-                source.getValue(),
-                6
-            )
+           "Beta Alpha is 6"
         );
         assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void handle() {
+        final var message = "how much is pish tegj glob glob ?";
+        final var state = mock(ReadonlyState.class);
+        when(state.getAllForeignNumbers()).thenReturn(Set.of("glob", "pish", "tegj"));
+        when(state.getNumber("pish tegj glob glob")).thenReturn(42);
+        final var result = handler.handle(message, state);
+        final var expectedResult = new OutAction(
+           "pish tegj glob glob is 42"
+        );
+        assertEquals(Optional.of(expectedResult), result);
     }
 }

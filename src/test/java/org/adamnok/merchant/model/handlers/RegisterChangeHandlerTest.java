@@ -1,8 +1,10 @@
 package org.adamnok.merchant.model.handlers;
 
 import org.adamnok.merchant.model.handlers.actions.StoreChangeAction;
+import org.adamnok.merchant.model.handlers.actions.StoreForeignNumberAction;
 import org.adamnok.merchant.model.state.ReadonlyState;
 import org.adamnok.merchant.repositories.Change;
+import org.adamnok.merchant.repositories.ForeignNumber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +29,7 @@ class RegisterChangeHandlerTest {
     void pattern() {
         when(state.getAllForeignNumbers()).thenReturn(Set.of("Alpha", "Beta"));
         final var result = handler.pattern(state);
-        final var expectedResult = "(( |Beta|Alpha)+) ([a-zA-Z]+) is ([1-9][0-9]*|0) ([a-zA-Z]+)";
+        final var expectedResult = "(( |Alpha|Beta)+) ([a-zA-Z]+) is ([1-9][0-9]*|0) ([a-zA-Z]+)";
         assertEquals(Optional.of(expectedResult), result);
     }
 
@@ -35,9 +37,9 @@ class RegisterChangeHandlerTest {
     void action() {
         final var source = mock(Source.class);
         when(source.get(1)).thenReturn(new Source.SourceItem("Beta Alpha"));
-        when(source.get(2)).thenReturn(new Source.SourceItem("Silver"));
-        when(source.get(3)).thenReturn(new Source.SourceItem("11"));
-        when(source.get(4)).thenReturn(new Source.SourceItem("Credits"));
+        when(source.get(3)).thenReturn(new Source.SourceItem("Silver"));
+        when(source.get(4)).thenReturn(new Source.SourceItem("11"));
+        when(source.get(5)).thenReturn(new Source.SourceItem("Credits"));
         when(state.getNumber("Beta Alpha")).thenReturn(6);
 
         final var result = handler.action(source, state);
@@ -50,5 +52,24 @@ class RegisterChangeHandlerTest {
             )
         );
         assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void handle() {
+        final var message = "glob glob Silver is 34 Credits";
+        final var state = mock(ReadonlyState.class);
+        when(state.getAllForeignNumbers()).thenReturn(Set.of("glob"));
+        when(state.getAllMaterialNames()).thenReturn(Set.of("Silver", "Credits"));
+        when(state.getNumber("glob glob")).thenReturn(2);
+        final var result = handler.handle(message, state);
+        final var expectedResult = new StoreChangeAction(
+            new Change(
+                "Silver",
+                "Credits",
+                2,
+                34
+            )
+        );
+        assertEquals(Optional.of(expectedResult), result);
     }
 }

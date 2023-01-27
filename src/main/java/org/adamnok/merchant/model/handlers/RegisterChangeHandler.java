@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class RegisterChangeHandler implements Handler {
@@ -15,7 +16,9 @@ public class RegisterChangeHandler implements Handler {
     public Optional<String> pattern(ReadonlyState state) {
         if (state.getAllForeignNumbers().isEmpty())
             return Optional.empty();
-        final var allowedForeignNumbers = String.join("|", state.getAllForeignNumbers());
+        final var allowedForeignNumbers = state.getAllForeignNumbers().stream()
+            .sorted()
+            .collect(Collectors.joining("|"));
         return Optional.of(
             MessageFormat.format("({0}) ({1}) is ({2}) ({3})",
                 "(\s|" + allowedForeignNumbers + ")+",
@@ -30,10 +33,10 @@ public class RegisterChangeHandler implements Handler {
     public Action action(Source source, ReadonlyState state) {
         return new StoreChangeAction(
             new Change(
-                source.get(2).asChars(),
-                source.get(4).asChars(),
+                source.get(3).asChars(),
+                source.get(5).asChars(),
                 state.getNumber(source.get(1).asChars()),
-                Integer.parseInt(source.get(3).asChars())
+                Integer.parseInt(source.get(4).asChars())
             )
         );
     }

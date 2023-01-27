@@ -1,6 +1,7 @@
 package org.adamnok.merchant.model.handlers;
 
 import org.adamnok.merchant.model.handlers.actions.StoreForeignNumberAction;
+import org.adamnok.merchant.model.state.ReadonlyState;
 import org.adamnok.merchant.repositories.ForeignNumber;
 import org.junit.jupiter.api.Test;
 
@@ -32,5 +33,19 @@ class RegisterForeignNumberHandlerTest {
             )
         );
         assertEquals(expectedResult, result);
+    }
+    @Test
+    void handle() {
+        final var message = "prok is V";
+        final var state = mock(ReadonlyState.class);
+
+        final var result = handler.handle(message, state);
+        final var expectedResult = new StoreForeignNumberAction(
+            new ForeignNumber(
+                "prok",
+                'V'
+            )
+        );
+        assertEquals(Optional.of(expectedResult), result);
     }
 }

@@ -7,15 +7,18 @@ import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ForeignNumberHandler implements Handler {
     @Override
     public Optional<String> pattern(ReadonlyState state) {
         if (state.getAllForeignNumbers().isEmpty()) return Optional.empty();
-        final var numbers = String.join("|", state.getAllForeignNumbers());
+        final var numbers = state.getAllForeignNumbers().stream()
+            .sorted()
+            .collect(Collectors.joining("|"));
         return Optional.of(
-            MessageFormat.format("how much is (({0})+)\\?",
+            MessageFormat.format("how much is (({0})+) \\?",
                 "\s|" + numbers
             )
         );
@@ -26,7 +29,7 @@ public class ForeignNumberHandler implements Handler {
         final var number = state.getNumber(source.get(1).asChars());
         return new OutAction(
             MessageFormat.format("{0} is {1}",
-                source.getValue(),
+                source.get(1).asChars(),
                 number
             )
         );
