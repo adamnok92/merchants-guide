@@ -5,11 +5,13 @@ import org.adamnok.merchant.model.handlers.actions.Action;
 import org.adamnok.merchant.model.handlers.actions.StoreForeignNumberAction;
 import org.adamnok.merchant.model.state.ReadonlyState;
 import org.adamnok.merchant.repositories.ForeignNumber;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 import static java.util.stream.Collectors.joining;
 
+@Component
 public class RegisterForeignNumberHandler implements Handler {
 
     private static final String ROMAN_NUMBERS = RomanNumberService.NUMBERS
