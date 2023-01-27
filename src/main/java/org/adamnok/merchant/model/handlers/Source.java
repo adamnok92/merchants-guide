@@ -1,15 +1,28 @@
 package org.adamnok.merchant.model.handlers;
 
+import java.util.List;
 import java.util.regex.Matcher;
 
-public final class Source {
-    private final Matcher matcher;
+public interface Source {
+    SourceItem get(int index);
 
-    public Source(Matcher matcher) {
-        this.matcher = matcher;
+    static Source of(Matcher matcher) {
+        return new SourceImpl(matcher);
     }
 
-    static final class SourceItem {
+    static Source of(List<String> list) {
+        return new SourceListImpl(list);
+    }
 
+    final class SourceItem {
+        private final String value;
+
+        public SourceItem(String value) {
+            this.value = value;
+        }
+
+        public String asChars() {
+            return value;
+        }
     }
 }
