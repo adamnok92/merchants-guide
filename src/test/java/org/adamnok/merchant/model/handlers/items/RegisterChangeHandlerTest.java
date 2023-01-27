@@ -39,7 +39,7 @@ class RegisterChangeHandlerTest {
         when(source.get(3)).thenReturn(new Source.SourceItem("Silver"));
         when(source.get(4)).thenReturn(new Source.SourceItem("11"));
         when(source.get(5)).thenReturn(new Source.SourceItem("Credits"));
-        when(state.getNumber("Beta Alpha")).thenReturn(6);
+        when(state.getNumber("Beta Alpha")).thenReturn(Optional.of(6));
 
         final var result = handler.action(source, state);
         final var expectedResult = new StoreChangeAction(
@@ -59,7 +59,7 @@ class RegisterChangeHandlerTest {
         final var state = mock(ReadonlyState.class);
         when(state.getAllForeignNumbers()).thenReturn(Set.of("glob"));
         when(state.getAllMaterialNames()).thenReturn(Set.of("Silver", "Credits"));
-        when(state.getNumber("glob glob")).thenReturn(2);
+        when(state.getNumber("glob glob")).thenReturn(Optional.of(2));
         final var result = handler.handle(message, state);
         final var expectedResult = new StoreChangeAction(
             new Change(

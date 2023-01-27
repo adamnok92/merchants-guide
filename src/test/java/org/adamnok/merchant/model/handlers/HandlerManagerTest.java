@@ -29,8 +29,8 @@ class HandlerManagerTest {
                 return Optional.empty();
             }
         };
-        final var handlerManager = new HandlerManager(List.of(handler));
-        final var result = handlerManager.handle("TEST", null);
+        final var handlerManager = new HandlerManager(null, List.of(handler));
+        final var result = handlerManager.handle("TEST");
         final var expectedResult = new OutAction("I have no idea what you are talking about");
         assertEquals(expectedResult, result);
     }
@@ -53,8 +53,8 @@ class HandlerManagerTest {
                 return Optional.of(new OutAction("example result message"));
             }
         };
-        final var handlerManager = new HandlerManager(List.of(handler));
-        final var result = handlerManager.handle("TEST", null);
+        final var handlerManager = new HandlerManager(null, List.of(handler));
+        final var result = handlerManager.handle("TEST");
         final var expectedResult = new OutAction("example result message");
         assertEquals(expectedResult, result);
     }

@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
-public final class ForeignNumberRepository {
+public class ForeignNumberRepository {
     private final Map<String, Character> numbers = new HashMap<>();
 
     public Set<String> getAllForeignNumbers() {

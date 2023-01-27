@@ -1,5 +1,6 @@
 package org.adamnok.merchant.model.handlers.items;
 
+import org.adamnok.merchant.exceptions.InvalidForeignNumberException;
 import org.adamnok.merchant.exceptions.UnregisteredMaterialChangeException;
 import org.adamnok.merchant.model.handlers.Handler;
 import org.adamnok.merchant.model.handlers.Source;
@@ -38,7 +39,8 @@ public class ChangeHandler implements Handler {
         final var fromMaterialName = source.get(4).asChars();
         final var toMaterialName = source.get(1).asChars();
         final var numberAsForeignText = source.get(2).asChars();
-        final var number = state.getNumber(numberAsForeignText);
+        final var number = state.getNumber(numberAsForeignText)
+            .orElseThrow(() -> new InvalidForeignNumberException(numberAsForeignText));
 
         final var change = state.getMaterialChange(fromMaterialName, toMaterialName)
             .orElseThrow(() -> new UnregisteredMaterialChangeException(fromMaterialName, toMaterialName));

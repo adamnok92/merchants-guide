@@ -12,7 +12,7 @@ public interface ReadonlyState {
 
     String getRomanNumber(String foreignNumbers);
 
-    int getNumber(String foreignNumbers);
+    Optional<Integer> getNumber(String foreignNumbers);
 
     Optional<Change> getMaterialChange(String fromMaterialName, String toMaterialName);
 }

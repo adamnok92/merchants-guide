@@ -38,7 +38,7 @@ class ChangeHandlerTest {
         when(source.get(1)).thenReturn(new Source.SourceItem("Credits"));
         when(source.get(2)).thenReturn(new Source.SourceItem("Alpha Beta"));
         when(source.get(4)).thenReturn(new Source.SourceItem("Silver"));
-        when(state.getNumber("Alpha Beta")).thenReturn(7);
+        when(state.getNumber("Alpha Beta")).thenReturn(Optional.of(7));
         when(state.getMaterialChange("Silver", "Credits")).thenReturn(
             Optional.of(
                 new Change(
@@ -71,7 +71,7 @@ class ChangeHandlerTest {
                 )
             )
         );
-        when(state.getNumber("glob prok")).thenReturn(1);
+        when(state.getNumber("glob prok")).thenReturn(Optional.of(1));
         final var result = handler.handle(message, state);
         final var expectedResult = new OutAction(
             "glob prok Gold is 10 Credits"

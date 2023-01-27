@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class ChangeRepository {
@@ -24,5 +25,11 @@ public class ChangeRepository {
                 if (change.fromMaterialName().equals(fromMaterialName)) return change;
                 else return change.reverse();
             });
+    }
+
+    public Set<String> getAllMaterialNames() {
+        return changes.stream()
+            .flatMap(it -> it.materialNames().stream())
+            .collect(Collectors.toSet());
     }
 }

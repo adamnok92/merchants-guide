@@ -33,7 +33,7 @@ class ForeignNumberHandlerTest {
     void action() {
         final var source = mock(Source.class);
         when(source.get(1)).thenReturn(new Source.SourceItem("Beta Alpha"));
-        when(state.getNumber("Beta Alpha")).thenReturn(6);
+        when(state.getNumber("Beta Alpha")).thenReturn(Optional.of(6));
 
         final var result = handler.action(source, state);
         final var expectedResult = new OutAction(
@@ -47,7 +47,7 @@ class ForeignNumberHandlerTest {
         final var message = "how much is pish tegj glob glob ?";
         final var state = mock(ReadonlyState.class);
         when(state.getAllForeignNumbers()).thenReturn(Set.of("glob", "pish", "tegj"));
-        when(state.getNumber("pish tegj glob glob")).thenReturn(42);
+        when(state.getNumber("pish tegj glob glob")).thenReturn(Optional.of(42));
         final var result = handler.handle(message, state);
         final var expectedResult = new OutAction(
            "pish tegj glob glob is 42"

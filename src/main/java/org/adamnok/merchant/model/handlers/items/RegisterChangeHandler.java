@@ -1,5 +1,6 @@
 package org.adamnok.merchant.model.handlers.items;
 
+import org.adamnok.merchant.exceptions.InvalidForeignNumberException;
 import org.adamnok.merchant.model.handlers.Handler;
 import org.adamnok.merchant.model.handlers.Source;
 import org.adamnok.merchant.model.handlers.actions.Action;
@@ -37,7 +38,8 @@ public class RegisterChangeHandler implements Handler {
             new Change(
                 source.get(3).asChars(),
                 source.get(5).asChars(),
-                state.getNumber(source.get(1).asChars()),
+                state.getNumber(source.get(1).asChars())
+                    .orElseThrow(() -> new InvalidForeignNumberException(source.get(1).asChars())),
                 Integer.parseInt(source.get(4).asChars())
             )
         );

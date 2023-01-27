@@ -1,6 +1,5 @@
 package org.adamnok.merchant.model.handlers;
 
-import java.util.List;
 import java.util.regex.Matcher;
 
 public class Source {
