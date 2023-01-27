@@ -1,6 +1,8 @@
-package org.adamnok.merchant.model.handlers;
+package org.adamnok.merchant.model.handlers.items;
 
 import org.adamnok.merchant.exceptions.UnregisteredMaterialChangeException;
+import org.adamnok.merchant.model.handlers.Handler;
+import org.adamnok.merchant.model.handlers.Source;
 import org.adamnok.merchant.model.handlers.actions.Action;
 import org.adamnok.merchant.model.handlers.actions.OutAction;
 import org.adamnok.merchant.model.state.ReadonlyState;

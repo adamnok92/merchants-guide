@@ -1,5 +1,6 @@
-package org.adamnok.merchant.model.handlers;
+package org.adamnok.merchant.model.handlers.items;
 
+import org.adamnok.merchant.model.handlers.Source;
 import org.adamnok.merchant.model.handlers.actions.StoreForeignNumberAction;
 import org.adamnok.merchant.model.state.ReadonlyState;
 import org.adamnok.merchant.repositories.ForeignNumber;

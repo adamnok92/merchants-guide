@@ -1,5 +1,7 @@
-package org.adamnok.merchant.model.handlers;
+package org.adamnok.merchant.model.handlers.items;
 
+import org.adamnok.merchant.model.handlers.Handler;
+import org.adamnok.merchant.model.handlers.Source;
 import org.adamnok.merchant.model.handlers.actions.Action;
 import org.adamnok.merchant.model.handlers.actions.StoreChangeAction;
 import org.adamnok.merchant.model.state.ReadonlyState;

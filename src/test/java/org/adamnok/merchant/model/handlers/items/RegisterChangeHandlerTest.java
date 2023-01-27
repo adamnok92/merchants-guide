@@ -1,10 +1,9 @@
-package org.adamnok.merchant.model.handlers;
+package org.adamnok.merchant.model.handlers.items;
 
+import org.adamnok.merchant.model.handlers.Source;
 import org.adamnok.merchant.model.handlers.actions.StoreChangeAction;
-import org.adamnok.merchant.model.handlers.actions.StoreForeignNumberAction;
 import org.adamnok.merchant.model.state.ReadonlyState;
 import org.adamnok.merchant.repositories.Change;
-import org.adamnok.merchant.repositories.ForeignNumber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -2,8 +2,6 @@ package org.adamnok.merchant.model.state;
 
 import org.adamnok.merchant.repositories.Change;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

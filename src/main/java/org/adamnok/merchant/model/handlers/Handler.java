@@ -17,7 +17,7 @@ public interface Handler {
             .map(Pattern::compile)
             .map(it -> it.matcher(message))
             .filter(Matcher::find)
-            .map(m -> new Source(message, m))
+            .map(Source::new)
             .map(source -> action(source, state));
     }
 }

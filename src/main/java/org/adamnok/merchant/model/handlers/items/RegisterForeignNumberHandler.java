@@ -1,6 +1,8 @@
-package org.adamnok.merchant.model.handlers;
+package org.adamnok.merchant.model.handlers.items;
 
 import org.adamnok.merchant.model.RomanNumberService;
+import org.adamnok.merchant.model.handlers.Handler;
+import org.adamnok.merchant.model.handlers.Source;
 import org.adamnok.merchant.model.handlers.actions.Action;
 import org.adamnok.merchant.model.handlers.actions.StoreForeignNumberAction;
 import org.adamnok.merchant.model.state.ReadonlyState;
