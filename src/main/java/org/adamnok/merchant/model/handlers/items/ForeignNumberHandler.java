@@ -1,5 +1,6 @@
 package org.adamnok.merchant.model.handlers.items;
 
+import org.adamnok.merchant.exceptions.InvalidForeignNumberException;
 import org.adamnok.merchant.model.handlers.Handler;
 import org.adamnok.merchant.model.handlers.Source;
 import org.adamnok.merchant.model.handlers.actions.Action;
@@ -28,7 +29,8 @@ public class ForeignNumberHandler implements Handler {
 
     @Override
     public Action action(Source source, ReadonlyState state) {
-        final var number = state.getNumber(source.get(1).asChars());
+        final var number = state.getNumber(source.get(1).asChars())
+            .orElseThrow(() -> new InvalidForeignNumberException(source.get(1).asChars()));
         return new OutAction(
             MessageFormat.format("{0} is {1}",
                 source.get(1).asChars(),

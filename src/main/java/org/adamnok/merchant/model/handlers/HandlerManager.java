@@ -11,17 +11,15 @@ import java.util.Optional;
 
 @Component
 public class HandlerManager {
-    private final ReadonlyState state;
+
     private final List<Handler> handlers;
 
     @Autowired
-    public HandlerManager(ReadonlyState state, List<Handler> handlers) {
-        this.state = state;
+    public HandlerManager(List<Handler> handlers) {
         this.handlers = handlers;
     }
 
-
-    public Action handle(String message) {
+    public Action handle(String message, ReadonlyState state) {
         return handlers.stream()
             .map(handler -> handler.handle(message, state))
             .filter(Optional::isPresent)

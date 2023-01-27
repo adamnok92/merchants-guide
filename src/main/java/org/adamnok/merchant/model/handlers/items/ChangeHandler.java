@@ -45,9 +45,9 @@ public class ChangeHandler implements Handler {
         final var change = state.getMaterialChange(fromMaterialName, toMaterialName)
             .orElseThrow(() -> new UnregisteredMaterialChangeException(fromMaterialName, toMaterialName));
 
-        final var result = (number / change.fromValue()) * change.toValue();
+        final var result = (number.doubleValue() * change.toValue()) / change.fromValue();
         return new OutAction(
-            MessageFormat.format("{0} {1} is {2} {3}",
+            MessageFormat.format("{0} {1} is {2,number,#} {3}",
                 numberAsForeignText,
                 fromMaterialName,
                 result,
