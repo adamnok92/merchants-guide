@@ -33,3 +33,56 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.register('production') {
+    def home = "${buildDir}/production"
+    def app = "$home/app"
+    def lib = "$home/lib"
+    doLast {
+        delete home
+        mkdir home
+        mkdir app
+        mkdir lib
+
+        /*
+         * Application
+         */
+        copy {
+            from file("$buildDir/libs/")
+            include "*-plain.jar"
+            into file(app)
+        }
+        /*
+         * Dependencies
+         */
+        copy {
+            from file("$buildDir/dependencies/")
+            into file(lib)
+        }
+
+        /*
+         * Production externals
+         */
+        copy {
+            from file("production")
+            into file(home)
+        }
+    }
+}
+
+tasks.register('copyDependencies', Copy) {
+    from configurations.runtimeClasspath
+    into 'build/dependencies'
+}
+
+production.dependsOn(copyDependencies, jar)
+
+configure(production) {
+    group = 'Production'
+    description = 'Generate production code and connected components, script.'
+}
+
+configure(copyDependencies) {
+    group = 'Production'
+    description = 'Copy dependencies/libraries to the production folder.'
+}
