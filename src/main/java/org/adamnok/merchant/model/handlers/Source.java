@@ -3,18 +3,24 @@ package org.adamnok.merchant.model.handlers;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public interface Source {
-    SourceItem get(int index);
+public class Source {
+    private final String value;
+    private final Matcher matcher;
 
-    static Source of(Matcher matcher) {
-        return new SourceImpl(matcher);
+    public Source(String value,Matcher matcher) {
+        this.value = value;
+        this.matcher = matcher;
     }
 
-    static Source of(List<String> list) {
-        return new SourceListImpl(list);
+    public String getValue() {
+        return value;
     }
 
-    final class SourceItem {
+    public Source.SourceItem get(int index) {
+        return new Source.SourceItem(this.matcher.group(index));
+    }
+
+    final static class SourceItem {
         private final String value;
 
         public SourceItem(String value) {
