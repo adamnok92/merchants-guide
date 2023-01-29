@@ -20,7 +20,7 @@ After this command, we have to find the generated jar in the *build/libs* folder
 with the next command:
 
 ```
-java -jar merchant-1.0-SNAPSHOT.jar
+java -jar merchant-1.0.jar
 ```
 
 ### Build standard application
